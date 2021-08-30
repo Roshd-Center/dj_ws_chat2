@@ -17,4 +17,4 @@ class MessageApi(mixins.ListModelMixin, mixins.CreateModelMixin, GenericAPIView)
         return Message.objects.filter(sender=self.request.user)
 
     def get(self, request, *args, **kwargs):
-        self.list(request,*args, **kwargs)
+        return self.list(request,*args, **kwargs)
