@@ -19,6 +19,9 @@ class Topic(models.Model):
 
 class Message(models.Model):
 
+    class Meta:
+        ordering = ['-create_timestamp']
+
     class ForeignTopicReply(Exception):
 
         def __init__(self, from_topic: Topic = None, to_topic: Topic = None,*args: object) -> None:
