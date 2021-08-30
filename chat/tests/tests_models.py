@@ -47,5 +47,8 @@ class MessageTest(TopicTest):
         self.assertRaises(Message.ForeignTopicReply, Message.objects.create,
                           sender=self.users[1], content='Test2', topic=self.new_topic, reply=msg1)
 
-
+    def test_forward_msg(self):
+        msg1 = Message.objects.create(sender=self.users[0], content='Test1', topic=self.topic)
+        msg2 = msg1.forward(self.users[1], self.new_topic)
+        self.assertEqual(msg1.content, msg2.content)
 

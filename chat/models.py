@@ -38,7 +38,13 @@ class Message(models.Model):
             raise self.ForeignTopicReply(self.topic, self.reply.topic)
         super().save(force_insert, force_update, using, update_fields)
 
-
+    def forward(self, sender, new_topic):
+        """
+        Simple forwarding method
+        :param sender:
+        :param new_topic:
+        """
+        return Message.objects.create(sender=sender, content=self.content, topic=new_topic)
 
 
 
