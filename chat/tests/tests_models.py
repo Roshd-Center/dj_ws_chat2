@@ -8,17 +8,18 @@ from chat.models import Topic, Message
 class TopicTest(TestCase):
 
     def setUp(self) -> None:
-        self.users = [User.objects.create(username='test1'),
+        self.users = [User.objects.create(username='test0'),
+                      User.objects.create(username='test1'),
                       User.objects.create(username='test2'),
-                      User.objects.create(username='test3'),
-                      User.objects.create(username='test4')]
+                      User.objects.create(username='test3')]
         self.topic = Topic.objects.create(owner=self.users[0], title='Test1')
         self.topic.participants.add(self.users[1])
         self.topic.participants.add(self.users[2])
         self.topic.participants.add(self.users[3])
 
     def test_add_owner_to_participants(self):
-        self.assertIn(self.users[0],self.topic.participants.all())
+        print(Topic.objects.get(id=self.topic.id).participants.all())
+        self.assertIn(self.users[0],Topic.objects.get(id=self.topic.id).participants.all())
 
 
 class MessageTest(TopicTest):

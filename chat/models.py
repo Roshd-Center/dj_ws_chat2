@@ -14,6 +14,7 @@ class Topic(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super().save(force_insert, force_update, using, update_fields)
         if self.owner not in self.participants.all():
+            print("HERE!!!")
             self.participants.add(self.owner)
 
 
