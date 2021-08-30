@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'django_ws_chat.asgi.application'
+ASGI_APPLICATION = 'dj_ws_chat2.asgi.application'
 
 # CHANNEL_LAYERS = {
 #     'default': {
