@@ -33,7 +33,7 @@ class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     content = models.CharField(max_length=200)
     topic = models.ForeignKey(Topic, on_delete=models.DO_NOTHING, related_name='messages')
-    reply = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, blank=True, editable=False, default=None,
+    reply = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, blank=True, default=None,
                               related_name='replies')
     create_timestamp = models.DateTimeField(auto_now_add=True)
 
