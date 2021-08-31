@@ -1,12 +1,9 @@
-from channels import DEFAULT_CHANNEL_LAYER
-from channels.layers import get_channel_layer
-from django.contrib.auth.models import User
-from django.db.models.fields.related_descriptors import ManyToManyDescriptor
 from rest_framework import mixins, permissions
 
 # Create your views here.
 from rest_framework.generics import GenericAPIView
 
+from chat.consumers import ChatConsumer
 from chat.models import Message, Topic
 from chat.serializers import MessageSerializer, TopicSerializer
 
@@ -54,5 +51,8 @@ class MessageApi(mixins.ListModelMixin, mixins.CreateModelMixin, GenericAPIView)
         return self.create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(topic=self.get_topic())
+        msg = serializer.save(topic=self.get_topic())
+        self.notify(msg)
 
+    def notify(self, message: Message):
+        ChatConsumer.notify_users(message.topic.participants.all(), MessageSerializer(message).data)
