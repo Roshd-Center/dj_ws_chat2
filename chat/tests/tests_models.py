@@ -53,3 +53,9 @@ class MessageTest(TopicTest):
         msg2 = msg1.forward(self.users[1], self.new_topic)
         self.assertEqual(msg1.content, msg2.content)
 
+
+    def test_seen_msg(self):
+        msg1 = Message.objects.create(sender=self.users[0], content='Test1', topic=self.topic)
+        msg1.seen(self.users[3])
+        self.assertIn(self.users[3], msg1.seeners.all())
+

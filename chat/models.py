@@ -35,6 +35,7 @@ class Message(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.DO_NOTHING, related_name='messages')
     reply = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, blank=True, default=None,
                               related_name='replies')
+    seeners = models.ManyToManyField(User, related_name='+', editable=False)
     create_timestamp = models.DateTimeField(auto_now_add=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
@@ -50,5 +51,6 @@ class Message(models.Model):
         """
         return Message.objects.create(sender=sender, content=self.content, topic=new_topic)
 
-
+    def seen(self, user: User):
+        self.seeners.add(user)
 

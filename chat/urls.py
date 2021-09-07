@@ -1,9 +1,10 @@
 from django.urls import path
 
-from chat.views import MessageApi, TopicApi
+from .views import *
 
 urlpatterns = [
     path('topic/', TopicApi.as_view()),
     path('topic/<int:pk>', TopicApi.as_view()),
-    path('topic/<int:pk>/message', MessageApi.as_view()),
+    path('topic/<int:pk>/message', MessageListApi.as_view()),
+    path('topic/<int:topic_pk>/message/<int:message_pk>', MessageApi.as_view()),
 ]
